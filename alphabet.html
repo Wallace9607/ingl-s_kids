@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alfabeto Divertido em Inglês</title>
+<style>
+  :root{
+    --bg:#fff8e7; 
+    --text:#333; 
+    --panel:#ffe0b2;
+    --panel2:#ffcc80;
+    --accent:#ff6f61; 
+    --accent2:#ff9f43; 
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Comic Sans MS', 'Poppins', sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    padding:16px;
+  }
+
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px;
+    background: #fff8e7;
+
+  }
+
+  .nav-btn {
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 20px;
+    color: #fff;
+    transition: transform 0.2s, opacity 0.3s;
+  }
+  .nav-btn:hover {
+    transform: scale(1.08);
+    opacity: 0.9;
+  }
+
+  /* 🎨 cores de cada botão */
+  .home { background: #b4b4b4; }
+  .alphabet { background: #ff6f61; }   /* vermelho coral */
+  .numbers  { background: #ffb74d; }   /* laranja */
+  .colors   { background: #4db6ac; }   /* verde água */
+  .animals  { background: #64b5f6; }   /* azul */
+  .objects  { background: #ba68c8; }   /* roxo */
+  .fruits   { background: #81c784; }   /* verde */
+  .vehicles { background: #f06292; }   /* rosa */
+  .shapes   { background: #ffd54f; color:#333; }  /* amarelo (texto escuro p/ contraste) */
+
+  header{text-align:center;margin-bottom:20px}
+  h1{font-size:clamp(26px,5vw,38px);color:var(--accent)}
+  .subtitle{color:#555;font-size:16px;margin-top:6px}
+
+  .toolbar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px auto}
+  .btn{
+    background:var(--accent);
+    border:0;
+    color:white;
+    padding:10px 14px;
+    border-radius:20px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:14px;
+  }
+  .btn.secondary{background:var(--accent2)}
+
+  .main-layout{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+  .letters{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(100px, 1fr));
+    gap:12px;
+    margin-bottom:24px;
+    flex: 2 1 500px; /* cresce, encolhe, base 500px */
+  }
+  .letter-card{
+    background:var(--panel);
+    border:2px solid var(--panel2);
+    border-radius:16px;
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transition:transform .18s ease;
+  }
+  .letter-card:hover{transform:scale(1.05)}
+  .letter-card span{font-size:32px;font-weight:800;color:var(--accent)}
+  .letter-card small{color:#444;margin-top:4px;font-size:14px}
+  .pron{margin-top:4px;color:#00695c;font-size:13px;font-style:italic}
+  .card-actions{margin-top:8px}
+  .chip{
+    font-size:12px;
+    border-radius:20px;
+    padding:6px 12px;
+    border:none;
+    background:var(--accent2);
+    color:white;
+    cursor:pointer;
+  }
+
+  .quiz{
+    background:#fff3cd;
+    border:2px dashed #ffc107;
+    border-radius:16px;
+    padding:16px;
+    margin:0 auto;
+    max-width:400px;
+    text-align:center;
+  }
+  .quiz h3{margin:8px 0 12px;font-size:20px;color:#e65100}
+  .quiz .q{font-size:18px;margin:0 0 8px}
+  .quiz input{
+    width:100%;
+    padding:10px;
+    border-radius:10px;
+    border:2px solid #ffa000;
+    margin-top:6px;
+    text-align:center;
+    font-size:16px;
+  }
+  .quiz .row{display:flex;gap:6px;justify-content:center;margin-top:10px}
+  .quiz .hint{margin-top:8px;font-size:14px}
+  .ok{color:green;font-weight:700}
+  .bad{color:red;font-weight:700}
+
+  footer{margin-top:20px;color:#666;font-size:14px;text-align:center}
+</style>
+</head>
+<body>
+    <!-- 🔝 NAVBAR -->
+<nav>
+  <a class="nav-btn home" href="index.html">🏠 Início</a>
+  <a class="nav-btn alphabet" href="alphabet.html">🔤 Alfabeto</a>
+  <a class="nav-btn numbers" href="numbers.html">🔢 Números</a>
+  <a class="nav-btn colors" href="colors.html">🎨 Cores</a>
+  <a class="nav-btn animals" href="animals.html">🐶 Animais</a>
+  <a class="nav-btn objects" href="objects.html">🧸 Objetos</a>
+  <a class="nav-btn fruits" href="fruits.html">🍎 Frutas</a>
+  <a class="nav-btn vehicles" href="vehicles.html">🚗 Veículos</a>
+  <a class="nav-btn shapes" href="shapes.html">🔺 Formas</a>
+</nav>
+  <header>
+    <h1> Alfabeto Divertido em Inglês</h1>
+    <p class="subtitle">Clique nas letrinhas para ouvir como se fala em inglês!</p>
+    <div class="toolbar">
+      <button class="btn" id="togglePron">👂 Mostrar/Esconder pronúncia</button>
+      <button class="btn secondary" id="shuffle">🔀 Embaralhar</button>
+      <button class="btn secondary" id="reset">🔄 Resetar</button>
+    </div>
+  </header>
+
+<div class="main-layout">
+  <div class="letters" id="letters"></div>
+  <section class="quiz">
+    <h3>🧩 Vamos brincar de Quiz!</h3>
+    <p class="q" id="quizQ">Carregando pergunta…</p>
+    <input id="quizA" placeholder="Digite aqui a resposta" autocomplete="off" />
+    <div class="row">
+      <button class="btn" id="check">✅ Verificar</button>
+      <button class="btn secondary" id="skip">➡️ Pular</button>
+      <button class="btn secondary" id="speakQ">🔊 Ouvir</button>
+    </div>
+    <div class="hint" id="hint"></div>
+  </section>
+</div>
+
+  <footer>🌟 Aprender inglês é divertido! Clique nas letras e pratique o som.</footer>
+
+<script>
+  const data = [
+    {l:'A', w:'A', p:'ei'},
+    {l:'B', w:'B', p:'bi'},
+    {l:'C', w:'C', p:'ci'},
+    {l:'D', w:'D', p:'di'},
+    {l:'E', w:'E', p:'i'},
+    {l:'F', w:'F', p:'éf'},
+    {l:'G', w:'G', p:'dji'},
+    {l:'H', w:'H', p:'êitch'},
+    {l:'I', w:'I', p:'ai'},
+    {l:'J', w:'J', p:'djei'},
+    {l:'K', w:'K', p:'kei'},
+    {l:'L', w:'L', p:'él'},
+    {l:'M', w:'M', p:'ém'},
+    {l:'N', w:'N', p:'én'},
+    {l:'O', w:'O', p:'ou'},
+    {l:'P', w:'P', p:'pi'},
+    {l:'Q', w:'Q', p:'kiu'},
+    {l:'R', w:'R', p:'ár'},
+    {l:'S', w:'S', p:'és'},
+    {l:'T', w:'T', p:'ti'},
+    {l:'U', w:'U', p:'iu'},
+    {l:'V', w:'V', p:'vi'},
+    {l:'W', w:'W', p:'dábl iú'},
+    {l:'X', w:'X', p:'éks'},
+    {l:'Y', w:'Y', p:'uai'},
+    {l:'Z', w:'Z', p:'zi'}
+  ];
+
+  const container = document.getElementById('letters');
+  const togglePron = document.getElementById('togglePron');
+  const shuffleBtn = document.getElementById('shuffle');
+  const resetBtn = document.getElementById('reset');
+
+  let showPron = true;
+  let current = [...data];
+
+  function render(){
+    container.innerHTML = '';
+    current.forEach(item => {
+      const card = document.createElement('div');
+      card.className='letter-card';
+      card.innerHTML = `
+        <span>${item.l}</span>
+        <small>${item.w}</small>
+        <div class="pron" style="display:${showPron?'block':'none'}">${item.p}</div>
+        <div class="card-actions">
+          <button class="chip" onclick="speak('${item.l}')">🔊 Ouvir</button>
+        </div>`;
+      container.appendChild(card);
+    });
+  }
+
+  function speak(text){
+    if('speechSynthesis' in window){
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    } else alert('TTS não disponível no seu navegador.');
+  }
+
+  togglePron.onclick = ()=>{ showPron = !showPron; render(); };
+  shuffleBtn.onclick = ()=>{ current = current.sort(()=>Math.random()-0.5); render(); };
+  resetBtn.onclick = ()=>{ current = [...data]; render(); window.scrollTo({top:0,behavior:'smooth'}); };
+
+  // QUIZ --------------------------------------------------
+  const qEl = document.getElementById('quizQ');
+  const aEl = document.getElementById('quizA');
+  const hintEl = document.getElementById('hint');
+  const checkBtn = document.getElementById('check');
+  const skipBtn = document.getElementById('skip');
+  const speakQBtn = document.getElementById('speakQ');
+
+  let quizItem = null;
+
+  function newQuestion(){
+    quizItem = data[Math.floor(Math.random()*data.length)];
+    const mode = Math.random() < 0.5 ? 'l2w' : 'w2l';
+    quizItem.mode = mode;
+    aEl.value = '';
+    hintEl.textContent = '';
+    if(mode==='l2w'){ 
+      qEl.textContent = `Qual é o nome da letra ${quizItem.l}?`;
+    } else { 
+      qEl.textContent = `Qual letra faz o som de "${quizItem.w}"?`;
+    }
+    aEl.focus();
+  }
+
+  function checkAnswer(){
+    const ans = aEl.value.trim().toUpperCase();
+    if(quizItem.mode==='l2w'){
+      if(ans === quizItem.w.toUpperCase()){
+        hintEl.innerHTML = `<span class='ok'>🎉 Correto!</span> ${quizItem.l} = ${quizItem.w}`;
+        newQuestion();
+      } else {
+        hintEl.innerHTML = `<span class='bad'>❌ Ainda não.</span> Dica: começa com <b>${quizItem.w[0]}</b>.`;
+      }
+    } else {
+      if(ans === quizItem.l){
+        hintEl.innerHTML = `<span class='ok'>🎉 Correto!</span> ${quizItem.w} = ${quizItem.l}`;
+        newQuestion();
+      } else {
+        hintEl.innerHTML = `<span class='bad'>❌ Ops, tente de novo!</span>`;
+      }
+    }
+  }
+
+  checkBtn.onclick = checkAnswer;
+  aEl.addEventListener('keydown', (e)=>{ if(e.key==='Enter') checkAnswer(); });
+  skipBtn.onclick = newQuestion;
+  speakQBtn.onclick = ()=>{ if(quizItem) speak(quizItem.l); };
+
+  render();
+  newQuestion();
+</script>
+</body>
+</html>

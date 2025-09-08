@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inglês Divertido</title>
+  <style>
+    :root {
+      --bg:#fff8e7; 
+      --text:#333; 
+      --accent:#ff6f61; 
+      --accent2:#ff9f43; 
+    }
+    body {
+      font-family: "Comic Sans MS", "Poppins", sans-serif;
+      background: var(--bg);
+      margin: 0;
+      padding: 20px;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      background: linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip: text;
+      color: transparent;
+      margin: 0;
+    }
+    p {
+      font-size: 1.1rem;
+      color: #555;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .card {
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.2s, opacity 0.3s;
+      cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      opacity: 0.9;
+    }
+    .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+    }
+
+    /* 🎨 Cores divertidas para cada card */
+    .alphabet { background: #ff6f61; }   /* vermelho coral */
+    .numbers  { background: #ffb74d; }   /* laranja */
+    .colors   { background: #4db6ac; }   /* verde água */
+    .animals  { background: #64b5f6; }   /* azul claro */
+    .objects  { background: #ba68c8; }   /* roxo */
+    .fruits   { background: #81c784; }   /* verde */
+    .vehicles { background: #f06292; }   /* rosa */
+    .shapes   { background: #ffd54f; }   /* amarelo */
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌟 Inglês Divertido 🌟</h1>
+    <p>Clique em uma categoria e comece a aprender brincando!</p>
+  </header>
+
+  <div class="grid">
+    <a class="card alphabet" href="alphabet.html">
+      <div class="emoji">🔤</div>
+      <div>Alfabeto</div>
+    </a>
+    <a class="card numbers" href="numbers.html">
+      <div class="emoji">🔢</div>
+      <div>Números</div>
+    </a>
+    <a class="card colors" href="colors.html">
+      <div class="emoji">🎨</div>
+      <div>Cores</div>
+    </a>
+    <a class="card animals" href="animals.html">
+      <div class="emoji">🐶</div>
+      <div>Animais</div>
+    </a>
+    <a class="card objects" href="objects.html">
+      <div class="emoji">🧸</div>
+      <div>Objetos</div>
+    </a>
+    <a class="card fruits" href="fruits.html">
+      <div class="emoji">🍎</div>
+      <div>Frutas</div>
+    </a>
+    <a class="card vehicles" href="vehicles.html">
+      <div class="emoji">🚗</div>
+      <div>Veículos</div>
+    </a>
+    <a class="card shapes" href="shapes.html">
+      <div class="emoji">🔺</div>
+      <div>Formas</div>
+    </a>
+  </div>
+
+  <footer>© 2025 Inglês Divertido — Aprendendo com alegria 💖</footer>
+</body>
+</html>

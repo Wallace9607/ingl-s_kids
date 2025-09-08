@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frutas em Inglês — Interativo</title>
+
+<style>
+  :root{
+    --bg:#fff8e7; 
+    --text:#333; 
+  }
+
+  body{
+    margin:0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding:20px;
+  }
+
+  /* ========================== NAVBAR ========================== */
+  nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px;
+    background: var(--bg);
+    margin-bottom:20px;
+  }
+
+  .nav-btn {
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 20px;
+    color: #fff;
+    transition: transform 0.2s, opacity 0.3s;
+  }
+  .nav-btn:hover {
+    transform: scale(1.08);
+    opacity: 0.9;
+  }
+  .home { background: #b4b4b4; }
+  .alphabet { background: #ff6f61; }  
+  .numbers  { background: #ffb74d; }  
+  .colors   { background: #4db6ac; }  
+  .animals  { background: #64b5f6; }  
+  .objects  { background: #ba68c8; }  
+  .fruits   { background: #81c784; }  
+  .vehicles { background: #f06292; }  
+  .shapes   { background: #ffd54f; color:#333; }  
+
+  /* ========================== HEADER ========================== */
+  header{
+    text-align:center;
+    margin-bottom:20px;
+  }
+  header h1{
+    font-size:clamp(28px,5vw,42px);
+    background: linear-gradient(90deg,#81c784,#66bb6a);
+    -webkit-background-clip:text;
+    color:transparent;
+  }
+  header p{
+    font-size:16px;
+    color:#555;
+  }
+
+  /* ========================== CARDS ========================== */
+  .fruits-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .fruit-card{
+    border-radius: 12px;
+    padding: 20px;
+    text-align:center;
+    font-weight:bold;
+    color:#fff;
+    cursor:pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position:relative;
+    overflow:hidden;
+  }
+  .fruit-card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+  }
+  .fruit-card small{
+    display:block;
+    margin-top:6px;
+    font-size:14px;
+    color:#fff;
+  }
+  .btn-speak{
+    margin-top:10px;
+    padding:6px 10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:12px;
+    background:rgba(255,255,255,0.3);
+    color:#fff;
+    font-weight:bold;
+  }
+  .btn-speak:hover{
+    background:rgba(255,255,255,0.5);
+  }
+
+  /* ========================== CONFETES ========================== */
+  .confetti{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:#fff;
+    top:0;
+    left:50%;
+    pointer-events:none;
+    animation:fall 0.8s linear forwards;
+    border-radius:50%;
+  }
+  @keyframes fall{
+    0%{transform:translateY(0) rotate(0deg);}
+    100%{transform:translateY(100px) rotate(360deg); opacity:0;}
+  }
+
+  footer{
+    text-align:center;
+    margin-top:30px;
+    font-size:13px;
+    color:#666;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ========================== NAVBAR ========================== -->
+<nav>
+  <a class="nav-btn home" href="index.html">🏠 Início</a>
+  <a class="nav-btn alphabet" href="alphabet.html">🔤 Alfabeto</a>
+  <a class="nav-btn numbers" href="numbers.html">🔢 Números</a>
+  <a class="nav-btn colors" href="colors.html">🎨 Cores</a>
+  <a class="nav-btn animals" href="animals.html">🐶 Animais</a>
+  <a class="nav-btn objects" href="objects.html">🧸 Objetos</a>
+  <a class="nav-btn fruits" href="fruits.html">🍎 Frutas</a>
+  <a class="nav-btn vehicles" href="vehicles.html">🚗 Veículos</a>
+  <a class="nav-btn shapes" href="shapes.html">🔺 Formas</a>
+</nav>
+
+<header>
+  <h1>Frutas em Inglês</h1>
+  <p>Aprenda os nomes das frutas com tradução e pronúncia divertida! Clique no botão de ouvir e veja confetes!</p>
+</header>
+
+<section class="fruits-grid" id="fruitsGrid"></section>
+
+<footer>Toque nos cards para ver a tradução e ouvir a pronúncia!</footer>
+
+<script>
+  const fruitsData = [
+    {name:'Apple', pt:'Maçã', color:'#ff5252', pron:'épol'},
+    {name:'Banana', pt:'Banana', color:'#ffeb3b', pron:'banána', text:'#333'},
+    {name:'Orange', pt:'Laranja', color:'#ff9800', pron:'óranj'},
+    {name:'Grapes', pt:'Uvas', color:'#9c27b0', pron:'gréips'},
+    {name:'Pineapple', pt:'Abacaxi', color:'#ff7043', pron:'páinepól'},
+    {name:'Strawberry', pt:'Morango', color:'#e91e63', pron:'stróberri'},
+    {name:'Watermelon', pt:'Melancia', color:'#4caf50', pron:'uótermelon'},
+    {name:'Kiwi', pt:'Kiwi', color:'#8bc34a', pron:'kiuí'},
+    {name:'Mango', pt:'Manga', color:'#ffb74d', pron:'mángou'},
+    {name:'Cherry', pt:'Cereja', color:'#f06292', pron:'tchéri'}
+  ];
+
+  const grid = document.getElementById('fruitsGrid');
+
+  fruitsData.forEach(f=>{
+    const card = document.createElement('div');
+    card.className='fruit-card';
+    card.style.background=f.color;
+    if(f.text) card.style.color=f.text;
+    card.innerHTML=`
+      ${f.name} <small>(${f.pt})</small>
+      <div class="pron">${f.pron}</div>
+      <button class="btn-speak">🔊 Ouvir</button>
+    `;
+    const btn = card.querySelector('.btn-speak');
+    btn.onclick = (e)=>{
+      e.stopPropagation();
+      speak(f.name);
+      showConfetti(card);
+    };
+    card.onclick = ()=>{
+      alert(`${f.name} = ${f.pt}\nPronúncia: ${f.pron}`);
+    };
+    grid.appendChild(card);
+  });
+
+  function speak(text){
+    if('speechSynthesis' in window){
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    }
+  }
+
+  function showConfetti(card){
+    for(let i=0;i<8;i++){
+      const conf = document.createElement('div');
+      conf.className='confetti';
+      conf.style.left=Math.random()*card.offsetWidth+'px';
+      conf.style.background=`hsl(${Math.random()*360},80%,70%)`;
+      card.appendChild(conf);
+      setTimeout(()=>conf.remove(),800);
+    }
+  }
+</script>
+
+</body>
+</html>
