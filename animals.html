@@ -4,30 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Animais em Inglês — Interativo</title>
-
 <style>
-  :root{
-    --bg:#fff8e7; 
-    --text:#333; 
-  }
-
   body{
     margin:0;
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    background:#fff8e7;
+    color:#333;
     padding:20px;
   }
 
-  /* ========================== NAVBAR ========================== */
   nav {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 12px;
     padding: 14px;
-    background: var(--bg);
-    margin-bottom:20px;
+    background: #fff8e7;
+
   }
 
   .nav-btn {
@@ -42,83 +35,146 @@
     transform: scale(1.08);
     opacity: 0.9;
   }
-  .home { background: #b4b4b4; }
-  .alphabet { background: #ff6f61; }  
-  .numbers  { background: #ffb74d; }  
-  .colors   { background: #4db6ac; }  
-  .animals  { background: #64b5f6; }  
-  .objects  { background: #ba68c8; }  
-  .fruits   { background: #81c784; }  
-  .vehicles { background: #f06292; }  
-  .shapes   { background: #ffd54f; color:#333; }  
 
-  /* ========================== HEADER ========================== */
-  header{
-    text-align:center;
-    margin-bottom:20px;
-  }
+  /* 🎨 cores de cada botão */
+  .home { background: #b4b4b4; }
+  .alphabet { background: #ff6f61; }   /* vermelho coral */
+  .numbers  { background: #ffb74d; }   /* laranja */
+  .colors   { background: #4db6ac; }   /* verde água */
+  .animals  { background: #64b5f6; }   /* azul */
+  .objects  { background: #ba68c8; }   /* roxo */
+  .fruits   { background: #81c784; }   /* verde */
+  .vehicles { background: #f06292; }   /* rosa */
+  .shapes   { background: #ffd54f; color:#333; }  /* amarelo (texto escuro p/ contraste) */
+
+  header{text-align:center;margin-bottom:20px;}
   header h1{
     font-size:clamp(28px,5vw,42px);
     background: linear-gradient(90deg,#64b5f6,#42a5f5);
     -webkit-background-clip:text;
     color:transparent;
   }
-  header p{
-    font-size:16px;
-    color:#555;
+
+  .score{
+    text-align:center;
+    font-size:18px;
+    margin-bottom:20px;
   }
 
-  /* ========================== CARDS ========================== */
   .animals-grid{
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
     gap: 16px;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 3rem 0 0 15rem;
   }
 
+  /* ===== CARD FLIP ===== */
   .animal-card{
-    border-radius: 12px;
-    padding: 20px;
-    text-align:center;
-    font-weight:bold;
-    color:#fff;
+    width: 160px;
+    height: 200px;
+    perspective: 1000px;
     cursor:pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    margin: 8px;
+  }
+  .card-inner{
     position:relative;
+    width:100%;
+    height:100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  .animal-card.flipped .card-inner{
+    transform: rotateY(180deg);
+
+  }
+  .card-front, .card-back{
+    position:absolute;
+    width:100%;
+    height:100%;
+    backface-visibility:hidden;
+    border-radius:12px;
     overflow:hidden;
   }
-  .animal-card:hover{
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+  .card-front{
+    background-size:cover;
+    background-position:center;
   }
-  .animal-card small{
-    display:block;
-    margin-top:6px;
-    font-size:14px;
+  .card-back{
+    background:rgba(0,0,0,0.75);
     color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transform: rotateY(180deg);
+    padding:10px;
+    text-align:center;
   }
   .btn-speak{
-    margin-top:10px;
-    padding:6px 10px;
+    margin-top:8px;
+    padding:6px 12px;
     border:none;
     border-radius:8px;
     cursor:pointer;
-    font-size:12px;
-    background:rgba(255,255,255,0.3);
-    color:#fff;
+    background:#fff;
+    color:#333;
     font-weight:bold;
   }
-  .btn-speak:hover{
-    background:rgba(255,255,255,0.5);
-  }
 
-  /* ========================== CONFETES ========================== */
+  /* ===== QUIZ ===== */
+/* ===== QUIZ COMO MODAL ===== */
+#quiz {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.quiz-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: pop 0.5s ease;
+}
+
+.quiz-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.quiz-options img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s;
+
+  padding: 5px;
+}
+
+.quiz-options img:hover {
+  transform: scale(1.1);
+}
+
+
+  /* ===== CONFETES ===== */
   .confetti{
     position:absolute;
     width:6px;
     height:6px;
-    background:#fff;
     top:0;
     left:50%;
     pointer-events:none;
@@ -127,23 +183,143 @@
   }
   @keyframes fall{
     0%{transform:translateY(0) rotate(0deg);}
-    100%{transform:translateY(100px) rotate(360deg); opacity:0;}
+    100%{transform:translateY(100px) rotate(360deg);opacity:0;}
   }
 
-  footer{
-    text-align:center;
-    margin-top:30px;
-    font-size:13px;
-    color:#666;
+  /* ===== ESTRELAS ===== */
+  .star{
+    position:absolute;
+    font-size:20px;
+    animation:rise 1s ease-out forwards;
+    color:gold;
   }
+  @keyframes rise{
+    from{transform:translateY(0);opacity:1;}
+    to{transform:translateY(-60px);opacity:0;}
+  }
+
+  /* ===== FEEDBACK MODAL ===== */
+  .feedback {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .feedback.hidden { display: none; }
+  .feedback-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 20px;
+    max-width: 300px;
+    animation: pop 0.5s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  }
+  .feedback-content.correct {
+    background: #d4edda;
+    color: #155724;
+    border: 3px solid #28a745;
+  }
+  .feedback-content.wrong {
+    background: #f8d7da;
+    color: #721c24;
+    border: 3px solid #dc3545;
+  }
+  @keyframes pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .feedback-content button {
+    margin-top: 15px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #333;
+    color: #fff;
+    font-weight: bold;
+  }
+  .feedback-content button:hover {
+    background: #555;
+  }
+
+
+
+  footer{text-align:center;margin-top:30px;font-size:13px;color:#666;}
+
+  /* ===== Responsividade ===== */
+
+/* Tablets */
+@media (max-width: 900px) {
+  .animals-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    margin: 0 auto;
+  }
+  .animal-card {
+    width: 140px;
+    height: 180px;
+  }
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  nav {
+    gap: 8px;
+    padding: 10px;
+  }
+  .nav-btn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  header h1 {
+    font-size: 24px;
+  }
+
+  .animals-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin: 0 auto;
+  }
+
+  .animal-card {
+    width: 120px;
+    height: 160px;
+  }
+
+  .quiz-content {
+    max-width: 300px;
+    width: 95%;
+    padding: 15px;
+  }
+  .quiz-options img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .feedback-content {
+    max-width: 250px;
+    font-size: 16px;
+    padding: 20px;
+  }
+}
 
 </style>
 </head>
 <body>
 
-<!-- ========================== NAVBAR ========================== -->
+      <!-- 🔝 NAVBAR -->
 <nav>
-    <a class="nav-btn home" href="index.html">🏠 Início</a>
+  <a class="nav-btn home" href="index.html">🏠 Início</a>
   <a class="nav-btn alphabet" href="alphabet.html">🔤 Alfabeto</a>
   <a class="nav-btn numbers" href="numbers.html">🔢 Números</a>
   <a class="nav-btn colors" href="colors.html">🎨 Cores</a>
@@ -156,70 +332,185 @@
 
 <header>
   <h1>Animais em Inglês</h1>
-  <p>Aprenda os nomes dos animais com pronúncia divertida! Clique no botão de ouvir e veja confetes!</p>
+  <p>Aprenda os nomes dos animais com pronúncia divertida! Clique para virar os cards, ouvir e jogar!</p>
 </header>
+
+<div class="score">⭐ Pontos: <span id="score">0</span></div>
 
 <section class="animals-grid" id="animalsGrid"></section>
 
-<footer>Toque nos cards para ver a tradução e ouvir a pronúncia!</footer>
+<!-- Quiz modal -->
+<div id="quiz">
+  <div class="quiz-content">
+    <h2 id="quizQuestion"></h2>
+    <div class="quiz-options" id="quizOptions"></div>
+  </div>
+</div>
+<!-- Modal de feedback -->
+<div id="feedback" class="feedback hidden">
+  <div class="feedback-content" id="feedbackContent"></div>
+</div>
+
+
+<footer>Explore, aprenda e jogue para ganhar pontos!</footer>
 
 <script>
-  const animalsData = [
-    {name:'Dog', pt:'Cachorro', color:'#f06292', pron:'dóg'},
-    {name:'Cat', pt:'Gato', color:'#ba68c8', pron:'kæt'},
-    {name:'Lion', pt:'Leão', color:'#ffb74d', pron:'láion'},
-    {name:'Elephant', pt:'Elefante', color:'#4db6ac', pron:'élefânt'},
-    {name:'Monkey', pt:'Macaco', color:'#ffd54f', pron:'mânki', text:'#333'},
-    {name:'Tiger', pt:'Tigre', color:'#ff8a65', pron:'táiger'},
-    {name:'Giraffe', pt:'Girafa', color:'#81c784', pron:'djiráf'},
-    {name:'Zebra', pt:'Zebra', color:'#64b5f6', pron:'zíbra'},
-    {name:'Bear', pt:'Urso', color:'#795548', pron:'bér'},
-    {name:'Rabbit', pt:'Coelho', color:'#e57373', pron:'râbit'}
-  ];
+const animalsData = [
+  {name:'Dog', pt:'Cachorro', img:'img/animals/cachorro.jpeg', pron:'dóg'},
+  {name:'Cat', pt:'Gato', img:'img/animals/gata.jpeg', pron:'kæt'},
+  {name:'Lion', pt:'Leão', img:'img/animals/leao.jpeg', pron:'láion'},
+  {name:'Elephant', pt:'Elefante', img:'img/animals/elefante.jpeg', pron:'élefânt'},
+  {name:'Monkey', pt:'Macaco', img:'img/animals/macaco.jfif', pron:'mânki'},
+  {name:'Tiger', pt:'Tigre', img:'img/animals/tiger.jfif', pron:'táiger'},
+  {name:'Giraffe', pt:'Girafa', img:'img/animals/girafa.jfif', pron:'djiráf'},
+  {name:'Zebra', pt:'Zebra', img:'img/animals/zebra.jpeg', pron:'zíbra'},
 
-  const grid = document.getElementById('animalsGrid');
+ {name:'Snake', pt:'Cobra', img:'img/animals/cobra.jfif', pron:'sneik'},
+  {name:'Panda', pt:'Panda', img:'img/animals/panda.jfif', pron:'pêndã'},
+  {name:'Bear', pt:'Urso', img:'img/animals/urso.jfif', pron:'bér'},
+  {name:'Cricket', pt:'Grilo', img:'img/animals/grilo.jfif', pron:'kríket'},
+  {name:'Ladybug', pt:'Joaninha', img:'img/animals/joaninha.jfif', pron:'lêidibâg'},
+  {name:'Squirrel', pt:'Esquilo', img:'img/animals/esquilo.jfif', pron:'skuíruel'},
+  {name:'Turtle', pt:'Tartaruga', img:'img/animals/tartaruga.jfif', pron:'târtl'},
+  {name:'Butterfly', pt:'Borboleta', img:'img/animals/borboleta.jfif', pron:'bârerflái'},
+  {name:'Bee', pt:'Abelha', img:'img/animals/abelha.jfif', pron:'bí'},
+  {name:'Ant', pt:'Formiga', img:'img/animals/formiga.jfif', pron:'ênt'},
+  {name:'Bat', pt:'Morcego', img:'img/animals/morcego.jfif', pron:'bæt'},
+  {name:'Hummingbird', pt:'Beija-flor', img:'img/animals/beijaflor.jfif', pron:'hâmimbârd'},
+  {name:'Mouse', pt:'Rato', img:'img/animals/rato.jfif', pron:'máus'},
+  {name:'Deer', pt:'Veado', img:'img/animals/veado.jfif', pron:'dír'},
+  {name:'Penguin', pt:'Pinguim', img:'img/animals/pinguim.jfif', pron:'pênguín'},
+  {name:'Toucan', pt:'Tucano', img:'img/animals/tucano.jfif', pron:'túcan'},
+  {name:'Dolphin', pt:'Golfinho', img:'img/animals/golfinho.jfif', pron:'dólfin'},
+  {name:'Owl', pt:'Coruja', img:'img/animals/coruja.jfif', pron:'ául'},
+  {name:'Rooster', pt:'Galo', img:'img/animals/galo.jfif', pron:'rúster'},
+  {name:'Hen', pt:'Galinha', img:'img/animals/galinha.jfif', pron:'rén'},
+  {name:'Cow', pt:'Vaca', img:'img/animals/vaca.jfif', pron:'cáu'},
+  {name:'Ox', pt:'Boi', img:'img/animals/boi.jfif', pron:'óks'},
+  {name:'Horse', pt:'Cavalo', img:'img/animals/cavalo.jfif', pron:'hórs'},
+  {name:'Duck', pt:'Pato', img:'img/animals/pato.jfif', pron:'dâk'},
+  {name:'Rabbit', pt:'Coelho', img:'img/animals/coelho.jfif', pron:'rêbit'},
+  {name:'Ostrich', pt:'Avestruz', img:'img/animals/avestruz.jfif', pron:'óstritch'},
+  {name:'Pig', pt:'Porco', img:'img/animals/porco.jfif', pron:'píg'}
+];
 
-  animalsData.forEach(a=>{
-    const card = document.createElement('div');
-    card.className='animal-card';
-    card.style.background=a.color;
-    if(a.text) card.style.color=a.text;
-    card.innerHTML=`
-      ${a.name} <small>(${a.pt})</small>
-      <div class="pron">${a.pron}</div>
-      <button class="btn-speak">🔊 Ouvir</button>
-    `;
-    const btn = card.querySelector('.btn-speak');
-    btn.onclick = (e)=>{
-      e.stopPropagation();
-      speak(a.name);
-      showConfetti(card);
-    };
-    card.onclick = ()=>{
-      alert(`${a.name} = ${a.pt}\nPronúncia: ${a.pron}`);
-    };
-    grid.appendChild(card);
+let score = 0;
+const grid = document.getElementById('animalsGrid');
+const scoreEl = document.getElementById('score');
+const quizEl = document.getElementById('quiz');
+const quizQuestion = document.getElementById('quizQuestion');
+const quizOptions = document.getElementById('quizOptions');
+
+animalsData.forEach(a=>{
+  const card = document.createElement('div');
+  card.className='animal-card';
+  card.innerHTML=`
+    <div class="card-inner">
+      <div class="card-front" style="background-image:url('${a.img}')"></div>
+      <div class="card-back">
+        <strong>${a.name}</strong>
+        <small>(${a.pt})</small>
+        <div>${a.pron}</div>
+        <button class="btn-speak">🔊 Ouvir</button>
+      </div>
+    </div>
+  `;
+  card.addEventListener('click',()=>card.classList.toggle('flipped'));
+  const btn = card.querySelector('.btn-speak');
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    speak(a.name);
+    addPoints(1);
+    showConfetti(card);
   });
+  grid.appendChild(card);
+});
 
-  function speak(text){
-    if('speechSynthesis' in window){
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'en-US';
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-    }
+function speak(text){
+  if('speechSynthesis' in window){
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
   }
+}
 
-  function showConfetti(card){
-    for(let i=0;i<8;i++){
-      const conf = document.createElement('div');
-      conf.className='confetti';
-      conf.style.left=Math.random()*card.offsetWidth+'px';
-      conf.style.background=`hsl(${Math.random()*360},80%,70%)`;
-      card.appendChild(conf);
-      setTimeout(()=>conf.remove(),800);
-    }
+function addPoints(n){
+  score+=n;
+  scoreEl.textContent=score;
+  showStar();
+  if(score>0 && score%5===0){ startQuiz(); }
+}
+
+function showConfetti(card){
+  for(let i=0;i<8;i++){
+    const conf=document.createElement('div');
+    conf.className='confetti';
+    conf.style.left=Math.random()*card.offsetWidth+'px';
+    conf.style.background=`hsl(${Math.random()*360},80%,70%)`;
+    card.appendChild(conf);
+    setTimeout(()=>conf.remove(),800);
   }
+}
+
+function showStar(){
+  const star=document.createElement('div');
+  star.className='star';
+  star.textContent='⭐';
+  star.style.left=(50+Math.random()*100)+'px';
+  star.style.top='0';
+  document.body.appendChild(star);
+  setTimeout(()=>star.remove(),1000);
+}
+
+/* === FEEDBACK MODAL === */
+function showFeedback(isCorrect, message){
+  const feedback = document.getElementById('feedback');
+  const content = document.getElementById('feedbackContent');
+  
+  content.className = 'feedback-content ' + (isCorrect ? 'correct' : 'wrong');
+  content.innerHTML = `
+    <div style="font-size:40px;">${isCorrect ? '🎉' : '😢'}</div>
+    <p>${message}</p>
+    <button onclick="closeFeedback()">OK</button>
+  `;
+  feedback.classList.remove('hidden');
+}
+function closeFeedback(){
+  document.getElementById('feedback').classList.add('hidden');
+}
+
+/* ========== QUIZ ========== */
+function startQuiz(){
+  const correct = animalsData[Math.floor(Math.random()*animalsData.length)];
+  quizQuestion.textContent = `Qual é o ${correct.name}?`;
+  quizOptions.innerHTML = '';
+  
+  let options = [correct];
+  while(options.length < 3){
+    const r = animalsData[Math.floor(Math.random()*animalsData.length)];
+    if(!options.includes(r)) options.push(r);
+  }
+  
+  options.sort(()=>Math.random()-0.5);
+  options.forEach(opt=>{
+    const img=document.createElement('img');
+    img.src = opt.img;
+    img.onclick=()=>{
+      if(opt === correct){
+        showFeedback(true, `Parabéns! Você acertou, era o ${correct.pt}!`);
+        addPoints(3);
+      } else {
+        showFeedback(false, `Oops! Você errou 😅 O correto era ${correct.pt}`);
+      }
+      quizEl.style.display = 'none';
+    };
+    quizOptions.appendChild(img);
+  });
+  
+  quizEl.style.display = 'flex'; // 🔹 agora abre centralizado
+}
+
 </script>
 
 </body>
